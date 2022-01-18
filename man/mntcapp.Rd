@@ -16,12 +16,12 @@ A generic inspection form (not technically Amazon affiliated)
 }
 \examples{
 \dontrun{
-##importFrom shiny
+
 ##importFrom shinyBS
 ##importFrom ggplot2
 }
 print("this has not yet been scripted")
 }
 \author{
-Garrett Groleman
+Samuel Mark DeClerk
 }
