@@ -85,7 +85,7 @@ mntcapp <- function(){
     severity <- list("1", "2")
     grounded <- list("Grounded", "Active")
     vehicleType <- list("All Types", "Electric", "Regulated", "Commercial Van", "Step Van", "Non CV, SV, or EV") #select one or more
-    modelNumber <- list("NRR DSL REG, 195, 268A, MT45G, E-450 STRIPPED, F-59 COMMERCIAL STRIPPED", "NRR DSL REG, 195, 268A, MT45G, E-450 STRIPPED, F-59 COMMERCIAL STRIPPED, V8100, TRANSIT-350HD, SV01, F59", "Other not listed") #select most applicable
+    modelNumber <- list("195", "268A", "SV01", "F59", "MT45G", "V8100", "NRR DSL REG", "E-450 STRIPPED", "F-59 COMMERCIAL STRIPPED", "TRANSIT-350HD", "TRANSIT-350HD", "Flex", "Other not listed") 
     NAOnly <- list("All", "NA", "Don't know")
 
     ui <- fluidPage(
@@ -114,22 +114,29 @@ mntcapp <- function(){
         ),
         mainPanel(
         tags$h4("Generated Form: "),
-        tags$h2(htmlOutput("concatForm"))
+        tags$h2(htmlOutput("concatForm")),
+        verbatimTextOutput("vin")
         )
     )
     )
 
     server <- function(input, output, session) {
-   
+
         output$concatForm <- renderUI({
-            str0 <- paste0(input$vinnumber, " have ")
-            str1 <- paste0(str0, tolower(input$category.sub))
-            if(endsWith(input$category.main, 's')){
-                str2 <- paste(" for the ", tolower(input$category.main), ".", sep="")    
+
+            if(grepl(",",input$vinnumber)){
+                str0 <- paste0(input$vinnumber, " have ")
             } else {
-                str2 <- paste(" for the ", tolower(input$category.main), ".")    
+                str0 <- paste0(input$vinnumber, " has ")
             }
-            
+
+            str1 <- paste0(str0, tolower(input$category.sub))
+
+            if(endsWith(input$category.main, 's')){
+                str2 <- paste(" for the ", paste0(tolower(input$category.main), "."), sep="")
+            } else {
+                str2 <- paste(" for the ", paste0(tolower(input$category.main), "."), sep="")    
+            }
 
             if(input$severity == "1"){
                 str3 <- " This is considered a severe issue."
@@ -138,13 +145,26 @@ mntcapp <- function(){
             }
             
             if(input$vehicleType != "All Types") {
-                str4 <- paste(paste0(" The ", tolower(input$vehicleType)), " (", input$modelNumber, ")")
+                str4 <- paste(paste0(" The ", tolower(input$vehicleType)), " (", input$modelNumber, ")", sep="")
                 
                 if(input$grounded != "Active") {
-                    str4 <- paste0(str4, " with reported VINs is/ are currently being serviced. ")
+
+                    if(grepl(",",input$vinnumber)){
+                        str4 <- paste0(str4, " with reported VINs are currently being serviced. ")
+                    } else {
+                        str4 <- paste0(str4, " with reported VIN is currently being serviced. ")
+                    }
+
+
                 } else {
-                    str4 <- paste0(str4, " with reported VINs has/ have returned to the road")
+
+                     if(grepl(",",input$vinnumber)){
+                        str4 <- paste0(str4, " with reported VINs have returned to the road")
+                    } else {
+                        str4 <- paste0(str4, " with reported VIN is returning to the road")
+                    }
                 }
+
             } else if(input$grounded != "Active") {
                 str4 <- " The vehicle is currently being serviced."
             } else {

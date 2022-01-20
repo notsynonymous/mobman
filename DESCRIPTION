@@ -1,6 +1,6 @@
 Package: mobman
 Title: Mobile Maintenance Package for CODS
-Version: 1.2
+Version: 1.5
 Authors@R: 
     person("Samuel", "M. De Clerk", , "sam@engineer.com", role = c("aut", "cre"))
 Description: Automates some of the processes of maitenance and generates metrics. In the future, there will be a shinyBS web interface that is more user friendly.
