@@ -21,11 +21,11 @@ testFunction <- function(name) {
 
 	if(length(name) != 0){
 		string2 <- paste0("Hello, ", name)
-		string3 <- ", I think that your vagina is nasty"
+		string3 <- ", I think you're great"
 		string_n <- paste0(string2, string3)
 	} else {
 		string2 <- paste0("Hello, ", Sys.getenv("%USERNAME%"))
-		string3 <- ", I think that your vagina is nasty."
+		string3 <- ", You're great"
 		string_n <- paste0(string2, string3)
 	}
 
