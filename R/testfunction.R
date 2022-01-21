@@ -4,7 +4,7 @@
 #'
 #' @author Samuel MDC
 #'
-#' @param name an object of type string that takes a name and completes a sentence about how nasty your vagina is. If blank, name is substituted for the current username.
+#' @param name just checking the compiler and telling you that you are lovely.
 #'
 #' @returns string_n
 #' 
@@ -21,11 +21,11 @@ testFunction <- function(name) {
 
 	if(length(name) != 0){
 		string2 <- paste0("Hello, ", name)
-		string3 <- ", I think you're great"
+		string3 <- ", I think that your vagina is nasty"
 		string_n <- paste0(string2, string3)
 	} else {
 		string2 <- paste0("Hello, ", Sys.getenv("%USERNAME%"))
-		string3 <- ", You're great"
+		string3 <- ", I think that your vagina is nasty."
 		string_n <- paste0(string2, string3)
 	}
 
